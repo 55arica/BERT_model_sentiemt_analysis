@@ -1,1 +1,66 @@
+num_labels = 2
+This means the model is designed to classify text into 2 categories (e.g., positive or negative sentiment).
 
+Example: If you are detecting sentiment, the labels can be:
+0: Negative sentiment
+1: Positive sentiment
+
+
+# -----------------------------------------------------------
+
+Sentences can have different lengths. Padding makes all inputs the same length by adding extra tokens (usually [PAD]).
+
+# -----------------------------------------------------------
+
+truncation=True:
+
+If a sentence is too long for the model to handle, truncation cuts it down to the maximum length.
+
+# -----------------------------------------------------------
+
+max_length=512:
+
+BERT can only handle inputs up to 512 tokens long. This ensures no input exceeds that limit.
+
+# -----------------------------------------------------------
+
+**inputs
+
+It’s just a convenient way to pass all the arguments at once.
+
+# -----------------------------------------------------------
+
+logits
+Logits are the raw outputs of the model, before they are converted into probabilities.
+
+Example: If the model predicts logits like:
+
+logits = [-1.2, 2.5]
+These numbers represent the "confidence" for each label:
+
+-1.2 is for label 0 (negative sentiment).
+2.5 is for label 1 (positive sentiment).
+To turn these into probabilities, you apply a function like softmax (this is handled internally for predictions).
+
+
+
+# -----------------------------------------------------------
+
+torch.argmax(logits, dim=1).item()
+This finds the label with the highest score and gives you the class (0 or 1).
+
+torch.argmax(logits, dim=1):
+
+Finds the index of the largest value in logits along dimension 1.
+Example:
+
+logits = [-1.2, 2.5]
+torch.argmax(logits, dim=1) -> 1 (because 2.5 is the largest)
+.item():
+
+Converts the result (a PyTorch tensor) into a simple Python number.
+Example:
+
+tensor(1) -> 1
+
+# -----------------------------------------------------------
